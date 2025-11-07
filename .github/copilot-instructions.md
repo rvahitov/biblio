@@ -263,7 +263,7 @@ dotnet add package NewPackage.Name --no-version
 - **Проверка статуса**: `git status` - показывает состояние рабочей директории и индекса
 - **Коммит изменений**: `git commit` - создает коммит с staged файлами
 
-### Workflow для "закомить staged files"
+### Workflow для "закоммитить staged files"
 ```bash
 # 1. Проверить статус репозитория
 git status
