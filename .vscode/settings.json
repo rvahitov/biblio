@@ -5,6 +5,7 @@
         "Biblio",
         "effectful",
         "Persistable",
+        "RWST",
         "Succ",
         "аппликативы",
         "Валидируй",
