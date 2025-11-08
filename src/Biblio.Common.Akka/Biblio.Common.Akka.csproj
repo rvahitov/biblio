@@ -5,9 +5,9 @@
   </PropertyGroup>
 
 <ItemGroup>
-    <PackageReference Include="Akka.Persistence" />
-    <PackageReference Include="LanguageExt.Core" />
-  </ItemGroup>
+  <PackageReference Include="Akka.Persistence" />
+  <PackageReference Include="LanguageExt.Core" />
+</ItemGroup>
 
 <ItemGroup>
   <ProjectReference Include="..\Biblio.Common\Biblio.Common.csproj" />

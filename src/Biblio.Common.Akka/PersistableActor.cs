@@ -31,7 +31,7 @@ public abstract class PersistableActor<TState, TEnvironment, TCommand, TEvent, T
     }
 
     /// <summary>
-    /// The current immutable state of the actor. Implementations should rely on for initial value.
+    /// The current immutable state of the actor. Implementations should rely on <c>TState.Initial</c> for the initial value.
     /// </summary>
     protected TState State { get; set; } = TState.Initial;
 
@@ -129,6 +129,7 @@ public abstract class PersistableActor<TState, TEnvironment, TCommand, TEvent, T
     {
         Recover<SnapshotOffer>(RecoverFromSnapshot);
         Command<SaveSnapshotSuccess>(AfterSnapshotSaved);
+        // No-op handler for DeleteSnapshotsSuccess: required to acknowledge snapshot deletion, but no action needed.
         Command<DeleteSnapshotsSuccess>(_ => true);
     }
 
