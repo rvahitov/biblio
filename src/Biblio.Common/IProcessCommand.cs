@@ -13,8 +13,8 @@ namespace Biblio.Common;
 /// This interface defines a static abstract method for processing commands, allowing for a functional programming approach.
 /// </remarks>
 /// </summary>
-public interface IProcessCommand<T, in TCommand, TEnvironment, TEvent, TResult>
-    where T : IProcessCommand<T, TCommand, TEnvironment, TEvent, TResult>
+public interface IProcessCommand<T, TEnvironment, in TCommand, TEvent, TResult>
+    where T : IProcessCommand<T, TEnvironment, TCommand, TEvent, TResult>
     where TCommand : IFallibleCommand<TResult>
 {
     /// <summary>
