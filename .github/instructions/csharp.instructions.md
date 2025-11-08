@@ -34,10 +34,10 @@ applyTo: '**/*.cs'
 - Объясняй математические концепции из теории категорий
 - Документируй функциональные композиции
 
-### XML документация на русском языке
+### XML документация на английском языке
 
 #### Общие принципы
-- Вся XML документация должна быть на русском языке
+- Вся XML документация должна быть на английском языке
 - Используй краткие, но информативные описания
 - Объясняй назначение параметров и возвращаемых значений
 - Указывай возможные исключения
@@ -45,11 +45,11 @@ applyTo: '**/*.cs'
 #### Обязательные теги
 ```csharp
 /// <summary>
-/// Краткое описание назначения класса/метода
+/// Brief description of the purpose of the class/method
 /// </summary>
-/// <param name="parameterName">Описание параметра</param>
-/// <returns>Описание возвращаемого значения</returns>
-/// <exception cref="ExceptionType">Условие возникновения исключения</exception>
+/// <param name="parameterName">Description of the parameter</param>
+/// <returns>Description of the return value</returns>
+/// <exception cref="ExceptionType">Condition under which the exception is thrown</exception>
 ```
 
 #### Примеры XML документации
@@ -57,8 +57,8 @@ applyTo: '**/*.cs'
 ##### Для классов
 ```csharp
 /// <summary>
-/// Представляет сервис для работы с книгами в библиотечной системе.
-/// Обеспечивает функциональную обработку операций CRUD с использованием монадических паттернов.
+/// Represents a service for managing books in the library system.
+/// Provides functional handling of CRUD operations using monadic patterns.
 /// </summary>
 public class BookService
 ```
@@ -66,30 +66,30 @@ public class BookService
 ##### Для методов
 ```csharp
 /// <summary>
-/// Получает книгу по её идентификатору с функциональной обработкой ошибок.
+/// Gets the book by its identifier using functional error handling.
 /// </summary>
-/// <param name="bookId">Уникальный идентификатор книги</param>
-/// <returns>Either с ошибкой или найденной книгой</returns>
-/// <exception cref="ArgumentNullException">Если bookId равен null</exception>
+/// <param name="bookId">The unique identifier of the book</param>
+/// <returns>Either containing an error or the found book</returns>
+/// <exception cref="ArgumentNullException">Thrown if bookId is null</exception>
 public Either<BookNotFoundError, Book> GetBook(BookId bookId)
 ```
 
 ##### Для интерфейсов функционального программирования
 ```csharp
 /// <summary>
-/// Определяет функтор - контейнер, к значениям которого можно применять функции.
-/// Это базовая абстракция теории категорий для функционального программирования.
+/// Defines a functor — a container whose values can be mapped with functions.
+/// This is a basic abstraction from category theory for functional programming.
 /// </summary>
-/// <typeparam name="T">Тип значения в контексте функтора</typeparam>
+/// <typeparam name="T">The type of the value inside the functor</typeparam>
 public interface IFunctor<T>
 {
     /// <summary>
-    /// Применяет функцию к значению внутри функтора, сохраняя структуру контейнера.
-    /// Это основная операция функтора, также известная как fmap в теории категорий.
+    /// Applies a function to the value inside the functor while preserving the container's structure.
+    /// This is the primary functor operation, also known as fmap in category theory.
     /// </summary>
-    /// <typeparam name="TResult">Тип результата применения функции</typeparam>
-    /// <param name="func">Функция для применения к значению</param>
-    /// <returns>Новый функтор с преобразованным значением</returns>
+    /// <typeparam name="TResult">The result type of the function application</typeparam>
+    /// <param name="func">Function to apply to the value</param>
+    /// <returns>A new functor with the transformed value</returns>
     IFunctor<TResult> Map<TResult>(Func<T, TResult> func);
 }
 ```
@@ -97,19 +97,19 @@ public interface IFunctor<T>
 ##### Для record типов
 ```csharp
 /// <summary>
-/// Представляет неизменяемый идентификатор книги.
-/// Обеспечивает типобезопасность и предотвращает путаницу с другими GUID значениями.
+/// Represents an immutable identifier for a book.
+/// Provides type safety and prevents confusion with other GUID values.
 /// </summary>
-/// <param name="Value">Уникальное значение идентификатора</param>
+/// <param name="Value">The unique identifier value</param>
 public record BookId(Guid Value);
 ```
 
 #### Специальные теги для функционального программирования
 ```csharp
 /// <remarks>
-/// Этот метод следует законам функторов:
-/// 1. Сохранение идентичности: Map(x => x) == исходный функтор
-/// 2. Композиция: Map(f).Map(g) == Map(x => g(f(x)))
+/// This method follows the laws of functors:
+/// 1. Identity preservation: Map(x => x) == the original functor
+/// 2. Composition: Map(f).Map(g) == Map(x => g(f(x)))
 /// </remarks>
 ```
 
@@ -130,6 +130,6 @@ public Either<Error, Book> GetBook(BookId id) =>
 
 ### Использование функторов
 ```csharp
-public IFunctor<string> ProcessBookTitle(IFunctor<Book> bookFunctor) =>
+public Functor<string> ProcessBookTitle(Functor<Book> bookFunctor) =>
     bookFunctor.Map(book => book.Title.ToUpperInvariant());
 ```

@@ -240,21 +240,21 @@ dotnet add package NewPackage.Name --no-version
 - Между заголовком и описанием должна быть пустая строка
 - Используй повелительное наклонение в заголовке ("добавь", "исправь", "обнови")
 
+- **Язык**: сообщения коммитов должны быть написаны на английском языке. / Commit messages must be written in English.
+
 ### Примеры
 ```
-добавь интерфейс IFunctor для теории категорий
+add the IFunctor interface for category theory
 
-Реализован базовый интерфейс IFunctor с методом Map для применения 
-функций к значениям в контексте. Это основа для построения 
-функциональных абстракций в библиотеке Cats.
+Implemented a basic IFunctor interface with a Map method for applying
+functions to values in a context. This is the foundation for building
+functional abstractions in the Cats library.
 ```
 
 ```
-исправь обработку ошибок в BookService
+fix error handling in BookService
 
-Заменил выбрасывание исключений на использование Either<Error, T> 
-для функциональной обработки ошибок. Это делает код более 
-предсказуемым и соответствует принципам функционального программирования.
+Replaced throwing exceptions with using Either<Error, T> for functional error handling. This makes the code more predictable and aligns with the principles of functional programming.
 ```
 
 ## Работа с Git
