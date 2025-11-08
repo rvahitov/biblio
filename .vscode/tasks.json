@@ -1,0 +1,52 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Restore Solution",
+            "type": "process",
+            "command": "dotnet",
+            "args": [
+                "restore",
+                "${workspaceFolder}/Biblio.sln"
+            ],
+            "presentation": {
+                "reveal": "silent"
+            }
+        },
+        {
+            "label": "Build Solution",
+            "type": "process",
+            "command": "dotnet",
+            "args": [
+                "build",
+                "${workspaceFolder}/Biblio.sln",
+                "-c",
+                "Debug"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$msCompile",
+            "presentation": {
+                "reveal": "always"
+            }
+        },
+        {
+            "label": "Run All Tests (solution)",
+            "type": "process",
+            "command": "dotnet",
+            "args": [
+                "test",
+                "${workspaceFolder}/Biblio.sln",
+                "-c",
+                "Debug"
+            ],
+            "group": "test",
+            "problemMatcher": "$msCompile",
+            "presentation": {
+                "reveal": "always"
+            }
+        }
+    ]
+}
