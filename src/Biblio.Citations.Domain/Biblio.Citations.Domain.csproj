@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+      <PackageReference Include="Akka.Persistence" />
+      <PackageReference Include="LanguageExt.Core" />
+    </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Biblio.Common.Akka\Biblio.Common.Akka.csproj" />
+    <ProjectReference Include="..\Biblio.Common\Biblio.Common.csproj" />
+  </ItemGroup>
+</Project>
