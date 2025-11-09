@@ -1,6 +1,7 @@
 namespace Biblio.Citations.Domain.BookDomain.Queries;
 
 /// <summary>
-/// Represents a query which targets a book within the Book domain.
+/// Marker interface for identifying queries related to books within the Book domain.
+/// Implementations may use this interface for type safety and query dispatching.
 /// </summary>
 public interface IBookQuery;
