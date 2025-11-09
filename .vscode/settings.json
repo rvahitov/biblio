@@ -11,5 +11,6 @@
         "Валидируй",
         "логируй",
         "типобезопасные"
-    ]
+    ],
+    "dotnet.testWindow.useTestingPlatformProtocol": true
 }
