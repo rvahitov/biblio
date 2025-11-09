@@ -1,6 +1,60 @@
 ---
 applyTo: '**/*.cs'
 ---
+## Контекст проекта
+Проект Biblio - это библиотечная система на C# .NET, использующая функциональное программирование и теорию категорий.
+
+## Архитектура
+- **Языки**: C# 13+, .NET
+- **Парадигма**: Функциональное программирование
+- **Структура**: Модульная архитектура с разделением на библиотеки
+- **Тестирование**: Unit тесты с xUnit, моки с FakeItEasy
+
+## Структура проекта
+```
+src/
+├── common/
+│   ├── Biblio.Common/     # Общие сообщения и интерфейсы
+│   └── Cats/              # Библиотека теории категорий
+├── services/              # Бизнес-сервисы
+└── api/                   # API слой
+```
+
+#### Современные возможности xUnit v3
+```csharp
+// Использование современного синтаксиса C# в тестах
+public class ModernTestExample
+{
+    [Fact]
+    public void Should_UseRecordTypes_When_Testing()
+    {
+        // Arrange
+        var bookData = new BookRequest("Title", "Author");
+        
+        // Act & Assert
+        bookData.Should().Match<BookRequest>(x => 
+            x.Title == "Title" && x.Author == "Author");
+    }
+
+    // Тестирование с использованием pattern matching
+    [Theory]
+    [InlineData(BookStatus.Available)]
+    [InlineData(BookStatus.Reserved)]
+    public void Should_HandleBookStatus_When_ValidStatus(BookStatus status)
+    {
+        // Act & Assert
+        var result = status switch
+        {
+            BookStatus.Available => true,
+            BookStatus.Reserved => true,
+            _ => false
+        };
+        
+        result.Should().BeTrue();
+    }
+}
+```
+
 ## Стиль кодирования
 
 ### Общие принципы
@@ -119,6 +173,176 @@ public record BookId(Guid Value);
 ```csharp
 public record Book(BookId Id, string Title, AuthorId AuthorId, DateTime PublishedAt);
 public record BookId(Guid Value);
+```
+
+## Зависимости и пакеты
+
+### Основные библиотеки
+- **LanguageExt.Core** - функциональное программирование и теория категорий
+- **xUnit v3** - современный тестовый фреймворк
+- **FakeItEasy** - библиотека моков
+- **FluentAssertions** - читаемые утверждения в тестах
+
+### Принципы использования зависимостей
+- Минимизируй внешние зависимости
+- Используй встроенные возможности .NET где возможно
+- Избегай reflection и dynamic код
+- Предпочитай композицию dependency injection
+
+### Управление пакетами через Directory.Packages.props
+Проект использует централизованное управление пакетами. **ОБЯЗАТЕЛЬНО** следуй этому workflow:
+
+#### Добавление нового NuGet пакета
+```bash
+# 1. СНАЧАЛА добавь пакет в Directory.Packages.props
+# Отредактируй файл и добавь новый PackageVersion:
+# <PackageVersion Include="NewPackage.Name" Version="1.2.3" />
+
+# 2. ЗАТЕМ добавь PackageReference в нужный .csproj БЕЗ указания версии
+dotnet add package NewPackage.Name --no-version
+
+# Или добавь вручную в .csproj:
+# <PackageReference Include="NewPackage.Name" />
+```
+
+#### Принципы работы с Directory.Packages.props
+- ✅ **Все версии пакетов** управляются централизованно в `Directory.Packages.props`
+- ✅ **В .csproj файлах** указывай только `<PackageReference Include="PackageName" />` БЕЗ версии
+- ❌ **НИКОГДА не указывай** Version в PackageReference в проектах
+- 🔄 **При обновлении** версии пакета - меняй только в `Directory.Packages.props`
+- 📦 **Для тестовых проектов** также используй централизованное управление
+
+#### Пример правильной структуры
+**Directory.Packages.props:**
+```xml
+<Project>
+    <PropertyGroup>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    </PropertyGroup>
+  
+    <ItemGroup>
+        <PackageVersion Include="xunit" Version="2.4.2" />
+        <PackageVersion Include="FakeItEasy" Version="8.0.0" />
+        <PackageVersion Include="FluentAssertions" Version="6.12.0" />
+    </ItemGroup>
+</Project>
+```
+
+**MyProject.csproj:**
+```xml
+<ItemGroup>
+    <PackageReference Include="xunit" />
+    <PackageReference Include="FakeItEasy" />
+    <PackageReference Include="FluentAssertions" />
+</ItemGroup>
+```
+
+## Производительность
+- Используй Span<T> и Memory<T> для работы с памятью
+- Предпочитай ValueTask для асинхронных операций
+- Избегай boxing примитивных типов
+- Применяй ленивые вычисления где уместно
+
+## Безопасность
+- Валидируй все входные параметры
+- Используй типобезопасные идентификаторы (например, BookId вместо Guid)
+- Не логируй чувствительную информацию
+- Применяй принцип наименьших привилегий
+
+## Тестирование
+
+### Фреймворки
+- **xUnit v3** - основной тестовый фреймворк (новая версия)
+- **FakeItEasy** - библиотека для создания моков и стабов
+- **FluentAssertions** - для читаемых утверждений
+
+### Принципы тестирования
+- Пиши unit тесты для всех публичных методов
+- Используй описательные имена тестов: `Should_ReturnBook_When_ValidIdProvided`
+- Применяй паттерн AAA (Arrange, Act, Assert)
+- Тестируй граничные случаи и обработку ошибок
+- Изолируй зависимости с помощью моков
+
+### Примеры тестов
+
+#### Базовый тест с xUnit v3
+```csharp
+public class BookServiceTests
+{
+    [Fact]
+    public void Should_ReturnBook_When_ValidIdProvided()
+    {
+        // Arrange
+        var bookId = new BookId(Guid.NewGuid());
+        var expectedBook = new Book(bookId, "Test Book", new AuthorId(Guid.NewGuid()), DateTime.Now);
+        var repository = A.Fake<IBookRepository>();
+        A.CallTo(() => repository.Find(bookId)).Returns(expectedBook);
+        var service = new BookService(repository);
+
+        // Act
+        var result = service.GetBook(bookId);
+
+        // Assert
+        result.Should().BeRight().Which.Should().Be(expectedBook);
+    }
+}
+```
+
+#### Тест с параметрами
+```csharp
+[Theory]
+[InlineData("")]
+[InlineData(null)]
+[InlineData("   ")]
+public void Should_ThrowException_When_InvalidTitleProvided(string invalidTitle)
+{
+    // Arrange & Act & Assert
+    var action = () => new Book(new BookId(Guid.NewGuid()), invalidTitle, new AuthorId(Guid.NewGuid()), DateTime.Now);
+    action.Should().Throw<ArgumentException>();
+}
+```
+
+#### Тест асинхронного метода
+```csharp
+[Fact]
+public async Task Should_CreateBook_When_ValidDataProvided()
+{
+    // Arrange
+    var repository = A.Fake<IBookRepository>();
+    var service = new BookService(repository);
+    var bookData = new CreateBookCommand("New Book", Guid.NewGuid());
+
+    // Act
+    var result = await service.CreateBookAsync(bookData);
+
+    // Assert
+    result.Should().BeRight();
+    A.CallTo(() => repository.SaveAsync(A<Book>._)).MustHaveHappenedOnceExactly();
+}
+```
+
+### Особенности xUnit v3
+- **Улучшенная производительность**: Более быстрое выполнение тестов
+- **Лучшая диагностика**: Подробные сообщения об ошибках и таймаутах
+- **Новые атрибуты**: Поддержка современных .NET возможностей
+- **Async/Await**: Полная поддержка асинхронного тестирования
+- **Параллельное выполнение**: Улучшенная параллелизация тестов
+
+#### Создание тестового проекта xUnit v3
+```bash
+# Создать новый тестовый проект с xUnit v3
+dotnet new xunit3 -n MyProject.Tests
+
+# Добавить ссылку на тестируемый проект
+dotnet add reference ../MyProject/MyProject.csproj
+
+# ВАЖНО: Сначала убедись что пакеты есть в Directory.Packages.props:
+# <PackageVersion Include="FakeItEasy" Version="8.0.0" />
+# <PackageVersion Include="FluentAssertions" Version="6.12.0" />
+
+# Затем добавь PackageReference БЕЗ версий
+dotnet add package FakeItEasy --no-version
+dotnet add package FluentAssertions --no-version
 ```
 
 ### Функциональная обработка ошибок
