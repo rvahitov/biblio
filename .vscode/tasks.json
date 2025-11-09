@@ -10,8 +10,9 @@
                 "${workspaceFolder}/Biblio.sln"
             ],
             "presentation": {
-                "reveal": "silent"
-            }
+                "reveal": "always"
+            },
+            // No problemMatcher needed for dotnet restore
         },
         {
             "label": "Build Solution",
