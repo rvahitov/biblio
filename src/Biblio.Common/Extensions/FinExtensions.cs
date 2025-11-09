@@ -36,4 +36,28 @@ public static class FinExtensions
         error = fin.FailSpan()[0];
         return false;
     }
+
+    /// <summary>
+    /// Attempts to extract the failure <see cref="Error"/> from a <see cref="Fin{A}"/>.
+    /// Returns <c>true</c> when the <paramref name="fin"/> represents a failure and sets
+    /// <paramref name="error"/> to the contained <see cref="Error"/>. When the fin is successful
+    /// the method returns <c>false</c> and <paramref name="error"/> is set to <c>null</c>.
+    /// </summary>
+    /// <typeparam name="A">The value type contained in the Fin.</typeparam>
+    /// <param name="fin">The Fin instance to inspect.</param>
+    /// <param name="error">When this method returns, contains the <see cref="Error"/> if the Fin was a failure; otherwise <c>null</c>.</param>
+    /// <returns><c>true</c> if the <paramref name="fin"/> is a failure; otherwise <c>false</c>.</returns>
+    /// <remarks>
+    /// This helper reads the fin payload via <see cref="Fin{A}.FailSpan"/> to avoid allocations when possible.
+    /// </remarks>
+    public static bool IsFailure<A>(this Fin<A> fin, [MaybeNullWhen(false)] out Error error)
+    {
+        error = null;
+        if (fin.IsSucc)
+        {
+            return false;
+        }
+        error = fin.FailSpan()[0];
+        return true;
+    }
 }

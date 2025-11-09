@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Biblio.Common", "src\Biblio.Common\Biblio.Common.csproj", "{B80CD6B0-0BED-4C01-B791-DDF7B9B97205}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0AB3BF05-4346-4AA6-1389-037BE0695223}"
+	ProjectSection(SolutionItems) = preProject
+		tests\Directory.Packages.props = tests\Directory.Packages.props
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Biblio.Common.Tests", "tests\Biblio.Common.Tests\Biblio.Common.Tests.csproj", "{E1940F5E-E432-4E9D-9337-43BFEDC9DB40}"
 EndProject

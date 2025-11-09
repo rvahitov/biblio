@@ -36,5 +36,35 @@ namespace Biblio.Common.Tests
             Assert.NotNull(error);
             Assert.Equal("boom", error.Message);
         }
+
+        [Fact]
+        public void IsFailure_ReturnsFalse_When_FinIsSuccess()
+        {
+            // Arrange
+            Fin<int> fin = 42; // implicit success
+
+            // Act
+            var result = Extensions.FinExtensions.IsFailure(fin, out var error);
+
+            // Assert
+            Assert.False(result);
+            Assert.Null(error);
+        }
+
+        [Fact]
+        public void IsFailure_ReturnsTrueAndError_When_FinIsFailure()
+        {
+            // Arrange
+            var err = Error.New("boom");
+            Fin<int> fin = err; // implicit failure
+
+            // Act
+            var result = Extensions.FinExtensions.IsFailure(fin, out var error);
+
+            // Assert
+            Assert.True(result);
+            Assert.NotNull(error);
+            Assert.Equal("boom", error.Message);
+        }
     }
 }
