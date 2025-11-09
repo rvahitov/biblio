@@ -17,6 +17,16 @@ public partial class Workflow
     public static Workflow<A> Pure<A>(A value) => Applicative.pure<Workflow, A>(value).As();
 
     /// <summary>
+    /// Lift an <see cref="IO{A}"/> into a <see cref="Workflow{A}"/>.
+    /// The provided <paramref name="io"/> will be executed when the workflow is run
+    /// and its result will be returned by the workflow.
+    /// </summary>
+    /// <typeparam name="A">Result type.</typeparam>
+    /// <param name="io">The IO action to lift into the workflow.</param>
+    /// <returns>A <see cref="Workflow{A}"/> that, when executed, runs the IO and yields its result.</returns>
+    public static Workflow<A> LiftIO<A>(IO<A> io) => Workflow<A>.LiftIO(io);
+
+    /// <summary>
     /// Create a failing workflow from an <see cref="Error"/>.
     /// </summary>
     /// <typeparam name="A">Result type parameter.</typeparam>
