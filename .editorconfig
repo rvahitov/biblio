@@ -37,3 +37,6 @@ dotnet_style_require_accessibility_modifiers = for_non_interface_members:suggest
 
 # IDE0005: Using directive is unnecessary.
 dotnet_diagnostic.IDE0005.severity = error
+
+# IDE0022: Use block body for method
+csharp_style_expression_bodied_methods = when_on_single_line

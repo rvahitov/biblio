@@ -10,8 +10,11 @@
                 "${workspaceFolder}/Biblio.sln"
             ],
             "presentation": {
-                "reveal": "silent"
-            }
+                "reveal": "always"
+            },
+            "problemMatcher": [
+                "$eslint-compact"
+            ]
         },
         {
             "label": "Build Solution",
