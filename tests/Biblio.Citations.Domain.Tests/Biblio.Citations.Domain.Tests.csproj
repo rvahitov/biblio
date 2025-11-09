@@ -27,9 +27,6 @@
     <PackageReference Include="FluentAssertions" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="BookDomain\Models\" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Biblio.Citations.Domain\Biblio.Citations.Domain.csproj" />

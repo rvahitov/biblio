@@ -12,9 +12,7 @@
             "presentation": {
                 "reveal": "always"
             },
-            "problemMatcher": [
-                "$eslint-compact"
-            ]
+            // No problemMatcher needed for dotnet restore
         },
         {
             "label": "Build Solution",
