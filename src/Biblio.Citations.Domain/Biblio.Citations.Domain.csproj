@@ -13,4 +13,5 @@
     <ProjectReference Include="..\Biblio.Common.Akka\Biblio.Common.Akka.csproj" />
     <ProjectReference Include="..\Biblio.Common\Biblio.Common.csproj" />
   </ItemGroup>
+
 </Project>
