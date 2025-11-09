@@ -82,26 +82,27 @@ public abstract class BookCollectionWorkflow : Workflow
         from book in GetBook(command.BookId)
         let chapterId = new ChapterId(command.ChapterNumber, command.VolumeNumber)
         from _1 in EnsureChapterNotExists(book, chapterId)
+        from now in Now
         from _2 in AddEvent(new ChapterAddedEvent
         {
             BookId = command.BookId,
             ChapterNumber = command.ChapterNumber,
             VolumeNumber = command.VolumeNumber,
             Title = command.Title,
-            OccurredOn = DateTime.Now
+            OccurredOn = now
         })
         select Unit.Default;
 
     private static Workflow<Unit> ProcessCommand(AddParagraphCommand command) =>
         from book in GetBook(command.BookId)
         from chapter in GetChapter(book, command.ChapterId)
-        from _1 in EnsureParagraphNotExists(chapter, command.ParagraphNumber)
+        from now in Now
         from _2 in AddEvent(new ParagraphAddedEvent
         {
             BookId = command.BookId,
             ChapterId = command.ChapterId,
             ParagraphNumber = command.ParagraphNumber,
-            OccurredOn = DateTime.Now
+            OccurredOn = now
         })
         select Unit.Default;
 
