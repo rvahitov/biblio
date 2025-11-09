@@ -41,7 +41,8 @@
                 "test",
                 "${workspaceFolder}/Biblio.sln",
                 "-c",
-                "Debug"
+                "Debug",
+                "--no-build"
             ],
             "group": "test",
             "problemMatcher": "$msCompile",

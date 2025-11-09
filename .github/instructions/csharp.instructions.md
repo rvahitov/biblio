@@ -62,6 +62,7 @@ public class ModernTestExample
 - Предпочитай функциональные конструкции
 - Избегай null, используй Option/Maybe паттерны
 - Применяй принципы SOLID и функционального программирования
+- Новые классы и записи должны быть sealed
 
 ### Именование
 - **Классы**: PascalCase (например, `BookService`, `UserRepository`)
