@@ -7,5 +7,6 @@
   <ItemGroup>
     <PackageVersion Include="LanguageExt.Core" Version="5.0.0-beta-54" />
     <PackageVersion Include="Akka.Persistence" Version="1.5.55" />
+    <PackageVersion Include="Akka.Cluster.Sharding" Version="1.5.55" />
   </ItemGroup>
 </Project>

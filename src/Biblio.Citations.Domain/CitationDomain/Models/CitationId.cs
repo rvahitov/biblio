@@ -18,11 +18,12 @@ public sealed record CitationId(BookId BookId, ChapterId ChapterId, int Paragrap
 {
     /// <summary>
     /// Returns a stable, storage-friendly identifier string for this citation.
+    /// The returned identifier is deterministic and intended for use by persistence
+    /// layers and cluster-sharding code (for example, the actor <see cref="Biblio.Citations.Domain.CitationDomain.Actors.CitationActor"/>).
     /// </summary>
     /// <returns>
     /// A string that uniquely identifies the citation in persistent storage. The format is:
-    /// <c>citation-{bookGuid}-{volume:D2}-{chapter:D3}-{paragraph:D2}</c> where <c>volume</c> falls back to 0
-    /// when absent.
+    /// <c>citation_{bookGuid}-{volume:00}-{chapter:000}-{paragraph:000}</c> where <c>volume</c> falls back to 0 when absent.
     /// </returns>
     /// <remarks>
     /// Implementation notes:
@@ -30,7 +31,8 @@ public sealed record CitationId(BookId BookId, ChapterId ChapterId, int Paragrap
     /// - Uses <see cref="ChapterId.Volume"/> and <see cref="ChapterId.Number"/> for chapter information; when
     ///   <see cref="ChapterId.Volume"/> is empty the code falls back to 0 via <c>IfNone(0)</c>.
     /// - This method delegates to the internal <see cref="MakePersistentId(BookId,ChapterId,int)"/> helper.
-    /// - Intended for use as a deterministic key in storage layers; it is not a replacement for a database primary key.
+    /// - Intended for use as a deterministic key in storage layers and for mapping messages to actor/entity ids
+    ///   in cluster sharding; it is not a replacement for a database primary key.
     /// </remarks>
     public string ToPersistentId() => MakePersistentId(BookId, ChapterId, ParagraphNumber);
 
