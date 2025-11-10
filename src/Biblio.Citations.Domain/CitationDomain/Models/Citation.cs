@@ -39,7 +39,7 @@ public sealed record Citation(
     /// <param name="meta">The metadata entry to add. Must not be null.</param>
     /// <returns>A new <see cref="Citation"/> instance that contains the added metadata entry.</returns>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="meta"/> is null.</exception>
-    internal Citation AddMeta(CitationMeta meta)
+    public Citation AddMeta(CitationMeta meta)
     {
         ArgumentNullException.ThrowIfNull(meta);
         return this with { Meta = Meta.Add(meta) };

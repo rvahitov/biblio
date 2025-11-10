@@ -64,7 +64,7 @@ ICitationWorkflowEnvironment
         _ => this
     };
 
-    private static CitationState ApplyEvent(CitationAddedEvent evt)
+    private CitationState ApplyEvent(CitationAddedEvent evt)
     {
         var citation = new Citation(
             evt.CitationId,
