@@ -77,6 +77,29 @@ public class ModernTestExample
 - Используй паттерн Either для обработки ошибок
 - Применяй неизменяемые коллекции
 
+### Collection expressions (выражения коллекций)
+
+- Рекомендуется использовать выражения коллекций для краткой и читаемой записи литералов коллекций, когда проект таргетит C# 12/13+.
+- Они особенно удобны в тестах и при создании immutable данных: сокращают шум от `new[] { ... }` или `new List<T> { ... }`.
+- Используйте их для литералов массивов и списков, но не злоупотребляйте в местах с сложной инициализацией или побочными эффектами.
+
+Примеры:
+```csharp
+// Array literal
+int[] ids = [1, 2, 3];
+
+// String array (tests)
+string[] abbreviations = ["Gen", "Gn"];
+
+// List<T> можно записать лаконично и затем при необходимости преобразовать
+var list = [1, 2, 3].ToList();
+```
+
+Причины для использования:
+- Улучшает читаемость тестов и фикстур
+- Снижает визуальный шум при создании небольших неизменяемых коллекций
+- Совместимо с современным C# и соответствует функциональному стилю проекта
+
 ## Файловая организация
 - Один публичный класс на файл
 - Имя файла должно соответствовать имени класса
@@ -253,7 +276,7 @@ dotnet add package NewPackage.Name --no-version
 ## Тестирование
 
 ### Фреймворки
-- **xUnit v3** - основной тестовый фреймворк (новая версия)
+- **xUnit** - основной тестовый фреймворк (новая версия)
 - **FakeItEasy** - библиотека для создания моков и стабов
 - **FluentAssertions** - для читаемых утверждений
 
@@ -266,7 +289,7 @@ dotnet add package NewPackage.Name --no-version
 
 ### Примеры тестов
 
-#### Базовый тест с xUnit v3
+#### Базовый тест с xUnit
 ```csharp
 public class BookServiceTests
 {
@@ -321,31 +344,6 @@ public async Task Should_CreateBook_When_ValidDataProvided()
     A.CallTo(() => repository.SaveAsync(A<Book>._)).MustHaveHappenedOnceExactly();
 }
 ```
-
-### Особенности xUnit v3
-- **Улучшенная производительность**: Более быстрое выполнение тестов
-- **Лучшая диагностика**: Подробные сообщения об ошибках и таймаутах
-- **Новые атрибуты**: Поддержка современных .NET возможностей
-- **Async/Await**: Полная поддержка асинхронного тестирования
-- **Параллельное выполнение**: Улучшенная параллелизация тестов
-
-#### Создание тестового проекта xUnit v3
-```bash
-# Создать новый тестовый проект с xUnit v3
-dotnet new xunit3 -n MyProject.Tests
-
-# Добавить ссылку на тестируемый проект
-dotnet add reference ../MyProject/MyProject.csproj
-
-# ВАЖНО: Сначала убедись что пакеты есть в Directory.Packages.props:
-# <PackageVersion Include="FakeItEasy" Version="8.0.0" />
-# <PackageVersion Include="FluentAssertions" Version="6.12.0" />
-
-# Затем добавь PackageReference БЕЗ версий
-dotnet add package FakeItEasy --no-version
-dotnet add package FluentAssertions --no-version
-```
-
 ### Функциональная обработка ошибок
 ```csharp
 public Either<Error, Book> GetBook(BookId id) =>
