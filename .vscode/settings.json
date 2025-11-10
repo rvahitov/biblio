@@ -4,6 +4,7 @@
         "behaviour",
         "Biblio",
         "effectful",
+        "kinded",
         "Persistable",
         "RWST",
         "Succ",
