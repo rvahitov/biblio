@@ -21,6 +21,7 @@
   <ItemGroup>
     <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="9.9.0" />
     <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="9.5.2" />
+    <PackageVersion Include="Aspire.Hosting.AppHost" Version="9.5.2" />
   </ItemGroup>
 
   <!-- OpenTelemetry (observability) -->
@@ -41,6 +42,7 @@
   <!-- Logging -->
   <ItemGroup>
     <PackageVersion Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageVersion Include="Serilog.Expressions" Version="5.1.0-dev-02301" />
     <PackageVersion Include="Serilog.Sinks.OpenTelemetry" Version="4.2.1-nblumhardt-02317" />
     <PackageVersion Include="Akka.Logger.Serilog" Version="1.5.25" />
   </ItemGroup>

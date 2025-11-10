@@ -22,8 +22,12 @@ builder
 
 // Add services to the container.
 
-var app = builder.Build();
-app.UseSerilogRequestLogging();
+var app = builder
+    .Build()
+    .WithSerilog() // Use Serilog middleware
+    .MapDefaultEndpoints() // Map default endpoints
+    .WithFastEndpoints() // Use FastEndpoints middleware
+    ;
 
 // Configure the HTTP request pipeline.
 
