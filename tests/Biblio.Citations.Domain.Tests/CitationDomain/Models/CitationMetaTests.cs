@@ -1,7 +1,7 @@
 using Biblio.Citations.Domain.CitationDomain.Models;
 using FluentAssertions;
 
-namespace Biblio.Citations.Domain.Tests.CitationDomain;
+namespace Biblio.Citations.Domain.Tests.CitationDomain.Models;
 
 public class CitationMetaTests
 {

@@ -3,7 +3,7 @@ using FluentAssertions;
 using LanguageExt;
 using static LanguageExt.Prelude;
 
-namespace Biblio.Citations.Domain.Tests.CitationDomain;
+namespace Biblio.Citations.Domain.Tests.CitationDomain.Models;
 
 public class CitationTagCollectionTests
 {
