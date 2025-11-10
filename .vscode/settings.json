@@ -1,12 +1,14 @@
 {
     "cSpell.words": [
         "Akka",
+        "ASPNETCORE",
         "behaviour",
         "Biblio",
         "effectful",
         "kinded",
         "Kurrent",
         "KurrentDb",
+        "kurrentplatform",
         "Persistable",
         "Petabridge",
         "RWST",

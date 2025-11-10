@@ -1,37 +1,39 @@
 {
-    "Using": [
-        "Serilog.Sinks.Console",
-        "Serilog.Sinks.OpenTelemetry"
-    ],
-    "MinimumLevel": {
-        "Default": "Information",
-        "Override": {
-            "Microsoft": "Warning",
-            "System": "Warning"
-        }
-    },
-    "WriteTo": [
-        {
-            "Name": "Console",
-            "Args": {
-                "outputTemplate": "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}"
+    "Serilog": {
+        "MinimumLevel": {
+            "Default": "Debug",
+            "Override": {
+                "System": "Error",
+                "Microsoft": "Warning",
+                "Akka": "Warning"
             }
         },
-        {
-            "Name": "OpenTelemetry",
+        "Filter": [
+            {
+                "Name": "ByExcluding",
+                "Args": {
+                    "expression": "RequestPath like '/health%'"
+                }
+            }
+        ],
+        "Enrich": [
+            "FromLogContext",
+            "WithMachineName",
+            "WithThreadId"
+        ],
+        "WriteTo:Console": {
+            "Name": "Console"
+        },
+        "WriteTo:OpenTelemetry": {
+            "Name": "Conditional",
             "Args": {
-                "resourceAttributes": "service.name=Biblio.Citations.WebApi",
-                "endpoint": "http://localhost:4317",
-                "protocol": "grpc"
+                "expression": "@l in ['Information','Warning', 'Error', 'Fatal']",
+                "configureSink": [
+                    {
+                        "Name": "OpenTelemetry"
+                    }
+                ]
             }
         }
-    ],
-    "Enrich": [
-        "FromLogContext",
-        "WithMachineName",
-        "WithThreadId"
-    ],
-    "Properties": {
-        "Application": "Biblio.Citations.WebApi"
     }
 }
