@@ -1,6 +1,7 @@
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Converters;
 
 namespace Biblio.Citations.Infrastructure;
 
@@ -24,12 +25,17 @@ public static partial class ApplicationBuilderExtensions
             .AddFastEndpoints()
             .SwaggerDocument(swagger =>
             {
-
+                swagger.AutoTagPathSegmentIndex = 2; // Use the 2nd segment of the path as the tag
+                swagger.NewtonsoftSettings = json =>
+                {
+                    json.Converters.Add(new StringEnumConverter()); // Serialize enums as strings
+                };
                 swagger.DocumentSettings = doc =>
                 {
                     doc.Title = "Biblio Citations API";
                     doc.Version = "v1";
                 };
+                swagger.ShortSchemaNames = true; // Use short schema names in Swagger
             });
         return appBuilder;
     }

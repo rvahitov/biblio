@@ -18,6 +18,7 @@ builder
     .WithSerilog() // Configure Serilog for the application
     .WithFastEndpoint() // Configure FastEndpoints for the application
     .WithAkka() // Configure Akka.NET for the application
+    .WithAppServices() // Configure application services
 ;
 
 // Add services to the container.
