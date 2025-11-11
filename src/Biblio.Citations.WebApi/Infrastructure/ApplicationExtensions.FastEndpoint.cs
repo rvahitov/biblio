@@ -15,7 +15,11 @@ public static partial class ApplicationExtensions
             fe.Endpoints.ShortNames = true; // Use short names for endpoints in Swagger
         });
         app.UseSwaggerGen();
-        app.UseReDoc(redoc => redoc.Path = "/redoc"); // Serve ReDoc at /redoc
+        app.UseReDoc(redoc =>
+        {
+            redoc.Path = "/redoc";
+            redoc.DocumentTitle = "Biblio Citations API Documentation";
+        }); // Serve ReDoc at /redoc
         return app;
     }
 }

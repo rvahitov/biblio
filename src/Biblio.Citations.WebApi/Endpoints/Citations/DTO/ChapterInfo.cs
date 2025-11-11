@@ -17,7 +17,7 @@ public sealed class ChapterInfo
     /// <summary>
     /// The chapter number. Must be between 1 and 500.
     /// </summary>
-    [Range(1, 500)]
+    [Range(1, 500), Required]
     public required int Number { get; init; }
 
     /// <summary>

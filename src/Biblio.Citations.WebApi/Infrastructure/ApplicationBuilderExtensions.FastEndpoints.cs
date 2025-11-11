@@ -35,6 +35,7 @@ public static partial class ApplicationBuilderExtensions
                     doc.Title = "Biblio Citations API";
                     doc.Version = "v1";
                 };
+                swagger.ShortSchemaNames = true; // Use short schema names in Swagger
             });
         return appBuilder;
     }

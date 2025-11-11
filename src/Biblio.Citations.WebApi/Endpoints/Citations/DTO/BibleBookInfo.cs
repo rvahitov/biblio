@@ -17,18 +17,19 @@ public sealed class BibleBookInfo
     /// <summary>
     /// The part of the Bible this book belongs to (for example, Old or New Testament).
     /// </summary>
+    [Required]
     public required BiblePart BiblePart { get; init; }
 
     /// <summary>
     /// 1-based position of the book within the whole Bible. Valid values: 1..80.
     /// </summary>
-    [Range(1, 80)]
+    [Range(1, 80), Required]
     public required int OrderInBible { get; init; }
 
     /// <summary>
     /// 1-based position of the book within its Bible part. Valid values: 1..60.
     /// </summary>
-    [Range(1, 60)]
+    [Range(1, 60), Required]
     public required int OrderInPart { get; init; }
 
     /// <summary>
@@ -48,6 +49,7 @@ public sealed class BibleBookInfo
     /// <summary>
     /// Indicates whether the book is considered apocryphal in some canonical lists.
     /// </summary>
+    [Required]
     public required bool IsApocryphal { get; init; }
 }
 
